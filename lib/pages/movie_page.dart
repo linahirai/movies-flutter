@@ -6,6 +6,7 @@ import '../widgets/centered_progress.dart';
 import '../widgets/movie_card.dart';
 import '../controllers/movie_controller.dart';
 
+
 class MoviePage extends StatefulWidget {
   @override
   _MoviePageState createState() => _MoviePageState();
@@ -15,6 +16,7 @@ class _MoviePageState extends State<MoviePage> {
   final _controller = MovieController();
   final _scrollController = ScrollController();
   int lastPage = 1;
+  int row = 2;
 
   @override
   void initState() {
@@ -48,6 +50,9 @@ class _MoviePageState extends State<MoviePage> {
     });
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +68,10 @@ class _MoviePageState extends State<MoviePage> {
         IconButton(
           icon: Icon(Icons.refresh),
           onPressed: _initialize,
+        ),
+        IconButton(
+          icon: Icon(Icons.dashboard),
+          onPressed: _buildMovieGridChange,
         ),
       ],
     );
@@ -82,13 +91,25 @@ class _MoviePageState extends State<MoviePage> {
       padding: const EdgeInsets.all(2.0),
       itemCount: _controller.moviesCount,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: row,
         mainAxisSpacing: 2,
         crossAxisSpacing: 2,
         childAspectRatio: 0.65,
       ),
       itemBuilder: _buildMovieCard,
     );
+  }
+
+  _buildMovieGridChange(){
+    if (this.row == 2) {
+      setState(() {
+        this.row = 3;
+      });
+    } else {
+      setState(() {
+        this.row = 2;
+      });
+    }
   }
 
   Widget _buildMovieCard(context, index) {
@@ -98,6 +119,7 @@ class _MoviePageState extends State<MoviePage> {
       onTap: () => _openDetailPage(movie.id),
     );
   }
+
 
   _openDetailPage(movieId) {
     Navigator.push(

@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-
 import '../errors/movie_error.dart';
 import '../models/movie_model.dart';
 import '../models/movie_response_model.dart';
